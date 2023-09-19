@@ -1,0 +1,24 @@
+/* canvas {
+    border: 2px solid #000;
+}
+
+body {
+    display: flex;
+
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    height: 85vh;
+} */
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+canvas {
+    border: 2px solid #000;
+}
