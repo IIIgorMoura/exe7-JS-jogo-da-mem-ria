@@ -21,7 +21,10 @@ function misturar(array) {
 
 // Crie um array com pares de cartas
 // Crie um array com 10 pares de cartas
-const cardPairs = ["A", "B", "C", "D", "E", "F", "G", "H",];
+const cardPairs = [
+    "img1.png", "img2.png", "img3.png", "img4.png",
+    "img5.png", "img6.png", "img7.png", "img8.png"
+];
 const cardDeck = cardPairs.concat(cardPairs);
 misturar(cardDeck);
 
@@ -110,9 +113,11 @@ function drawGame() {
         contexto.fillRect(cardX, cardY, LarguraCarta, cardHeight);
 
         if (card.isFlipped) {
-            contexto.fillStyle = "#000";
-            contexto.font = "24px Arial";
-            contexto.fillText(card.value, cardX + LarguraCarta / 2 - 12, cardY + cardHeight / 2 + 10);
+            const img = new Image();
+            img.src = card.value;
+            img.onload = function() {
+                contexto.drawImage(img, cardX, cardY, LarguraCarta, cardHeight);
+            };
         }
     }
 }
