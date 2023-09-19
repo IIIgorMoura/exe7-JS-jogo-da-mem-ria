@@ -1,15 +1,21 @@
-
-const canvas = document.getElementById("memory-game");
+const canvas = document.getElementById("canvas");
 const contexto = canvas.getContext("2d");
 
-const LarguraCarta = 100;
+const LarguraCarta = 150;
 const cardHeight = 150;
 const numLinhas = 4;
 const numColunas = 4;
 const cartas = [];
 
+const margemHorizontal = 10;
+const margemVertical = 10;
+
 let flippedCards = [];
 let isFlipping = false;
+
+// Carregue a imagem da parte de trás das cartas
+const backImage = new Image();
+backImage.src = "fundoCarta.jpg"; // Nome da sua imagem
 
 // Função para embaralhar as cartas
 function misturar(array) {
@@ -20,14 +26,12 @@ function misturar(array) {
 }
 
 // Crie um array com pares de cartas
-// Crie um array com 10 pares de cartas
 const cardPairs = [
     "img1.png", "img2.png", "img3.png", "img4.png",
     "img5.png", "img6.png", "img7.png", "img8.png"
 ];
 const cardDeck = cardPairs.concat(cardPairs);
 misturar(cardDeck);
-
 
 // Crie as cartas
 for (let row = 0; row < numLinhas; row++) {
@@ -91,8 +95,8 @@ function checkForMatch() {
 // Função para obter a carta clicada
 function getClickedCard(x, y) {
     for (const card of cartas) {
-        const cardX = card.col * LarguraCarta;
-        const cardY = card.row * cardHeight;
+        const cardX = margemHorizontal + card.col * (LarguraCarta + margemHorizontal);
+        const cardY = margemVertical + card.row * (cardHeight + margemVertical);
 
         if (x >= cardX && x <= cardX + LarguraCarta && y >= cardY && y <= cardY + cardHeight) {
             return card;
@@ -106,10 +110,10 @@ function drawGame() {
     contexto.clearRect(0, 0, canvas.width, canvas.height);
 
     for (const card of cartas) {
-        const cardX = card.col * LarguraCarta;
-        const cardY = card.row * cardHeight;
+        const cardX = margemHorizontal + card.col * (LarguraCarta + margemHorizontal);
+        const cardY = margemVertical + card.row * (cardHeight + margemVertical);
 
-        contexto.fillStyle = card.isFlipped ? "#fff" : "#000";
+        contexto.fillStyle = card.isFlipped ? "#fff" : "#53ee34";
         contexto.fillRect(cardX, cardY, LarguraCarta, cardHeight);
 
         if (card.isFlipped) {
@@ -118,6 +122,12 @@ function drawGame() {
             img.onload = function() {
                 contexto.drawImage(img, cardX, cardY, LarguraCarta, cardHeight);
             };
+        } else {
+            // Desenhe a imagem da parte de trás das cartas
+            contexto.drawImage(backImage, cardX, cardY, LarguraCarta, cardHeight);
         }
     }
 }
+
+// Chame a função drawGame para exibir o jogo inicialmente
+drawGame();

@@ -1,16 +1,3 @@
-/* canvas {
-    border: 2px solid #000;
-}
-
-body {
-    display: flex;
-
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    height: 85vh;
-} */
-
 body {
     display: flex;
     justify-content: center;
@@ -21,4 +8,12 @@ body {
 
 canvas {
     border: 2px solid #000;
+}
+
+.card {
+    width: 100px; /* Largura da carta */
+    height: 150px; /* Altura da carta */
+    margin: 10px; /* Espaçamento entre as cartas */
+    background-image: url("fundoCarta.jpg"); /* URL da imagem de fundo (verso da carta) */
+    background-size: cover; /* Ajusta o tamanho da imagem para cobrir toda a carta */
 }
