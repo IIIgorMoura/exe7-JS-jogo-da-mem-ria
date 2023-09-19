@@ -7,8 +7,8 @@ const numLinhas = 4;
 const numColunas = 4;
 const cartas = [];
 
-const margemHorizontal = 10;
-const margemVertical = 10;
+const margemHorizontal = 10; // Margem horizontal entre as cartas
+const margemVertical = 10;   // Margem vertical entre as cartas
 
 let flippedCards = [];
 let isFlipping = false;
@@ -16,6 +16,12 @@ let isFlipping = false;
 // Carregue a imagem da parte de trás das cartas
 const backImage = new Image();
 backImage.src = "fundoCarta.jpg"; // Nome da sua imagem
+
+// Pré-carregue a imagem da parte de trás das cartas
+backImage.onload = function() {
+    // Quando a imagem estiver carregada, chame a função drawGame para iniciar o jogo
+    drawGame();
+};
 
 // Função para embaralhar as cartas
 function misturar(array) {
@@ -128,6 +134,3 @@ function drawGame() {
         }
     }
 }
-
-// Chame a função drawGame para exibir o jogo inicialmente
-drawGame();
