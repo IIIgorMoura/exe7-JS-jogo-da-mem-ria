@@ -21,7 +21,7 @@ function misturar(array) {
 
 // Crie um array com pares de cartas
 // Crie um array com 10 pares de cartas
-const cardPairs = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+const cardPairs = ["A", "B", "C", "D", "E", "F", "G", "H",];
 const cardDeck = cardPairs.concat(cardPairs);
 misturar(cardDeck);
 
