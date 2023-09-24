@@ -1,21 +1,20 @@
+// obter e interpretar CANVAS
 const canvas = document.getElementById("canvas");
 const contexto = canvas.getContext("2d");
 
 // Tamanho das cartas
 const LarguraCarta = 150;
 const alturaCarta = 150;
-// Fim do tamanho das cartas
 
 // Quantidade de linhas e colunas
 const numLinhas = 4;
 const numColunas = 4;
-// Fim da quantidade de linhas e colunas
+
 const cartas = [];
 
 // Margens
 const margemHorizontal = 10;
 const margemVertical = 10;
-// Fim das margens
 
 let cartasViradas = [];
 let limiteCartasViradas = false;  
@@ -23,13 +22,11 @@ let limiteCartasViradas = false;
 // Imagem de fundo
 const imagemFundo = new Image();
 imagemFundo.src = "fundoCarta.jpg";
-// Fim da imagem de fundo
 
 // Pré-carregamento da imagem de fundo
 imagemFundo.onload = function () {
   iniciarJogo();
 };
-// Fim do pré-carregamento da imagem de fundo
 
 // Função para misturar as cartas
 function misturar(array) {
@@ -38,58 +35,65 @@ function misturar(array) {
     [array[i], array[j]] = [array[j], array[i]];
   }
 }
-// Fim da função para misturar as cartas
 
-// Array de pares de cartas
+// criação e mistura de pares de cartas
 const paresCarta = [
   "img1.png", "img2.png", "img3.png", "img4.png",
   "img5.png", "img6.png", "img7.png", "img8.png"
 ];
+
+//concatena o paresCarta, criando pares ex: "img1.png" "img1.png"
 const deckCartas = paresCarta.concat(paresCarta);
 misturar(deckCartas);
 
-// Criar as cartas
+// Cria cartas e atribui ao array cartas
 for (let row = 0; row < numLinhas; row++) {
   for (let col = 0; col < numColunas; col++) {
-    const card = {
+    const carta = {
       row,
       col,
       value: deckCartas.pop(),
       virado: false, 
     };
-    cartas.push(card);
+    cartas.push(carta);
   }
 }
 
 canvas.addEventListener("click", virarCarta);
 
-// Função para lidar com o clique em uma carta
 function virarCarta(event) {
+    
+// se o limite de 2 cartas for alcançado, encerra a função
   if (limiteCartasViradas || cartasViradas.length >= 2) {
     return;
   }
 
+  // le as coordenadas da carta escolhida pelo jogador
   const x = event.offsetX;
   const y = event.offsetY;
 
   const cartaEscolhida = pegarCartaEscolhida(x, y);
 
-  if (!cartaEscolhida || cartaEscolhida.virado) { // "!" utilizado para inverter o valor booleano de "cartaEscolhida"
+// se o jogador clicar em uma carta já escolhida ou fora do jogo, encerra a função
+  if (!cartaEscolhida || cartaEscolhida.virado) { // "!" utilizado para inverter o valor boolean de "cartaEscolhida"
     return;
   }
 
+  // envia a carta escolhida para "cartas viradas"
   cartaEscolhida.virado = true;
   cartasViradas.push(cartaEscolhida);
 
   if (cartasViradas.length === 2) {
     limiteCartasViradas = true;
+
+    // aciona um temporizador que ativa a função verificarPar em 1s
     setTimeout(verificarPar, 1000);
   }
 
   iniciarJogo();
 }
 
-// Função para verificar se as cartas combinam
+// verificar se as cartas combinam
 function verificarPar() {
   const [carta1, carta2] = cartasViradas;
 
@@ -101,40 +105,47 @@ function verificarPar() {
     carta2.virado = false; 
   }
 
+  //esvazia o cartasViradas e reseta o limiteCartasViradas
   cartasViradas = [];
   limiteCartasViradas = false;
+
   iniciarJogo();
 }
 
-// Função para obter a carta clicada
+// obter a carta escolhida
 function pegarCartaEscolhida(x, y) {
-  for (const card of cartas) {
-    const cardX = margemHorizontal + card.col * (LarguraCarta + margemHorizontal);
-    const cardY = margemVertical + card.row * (alturaCarta + margemVertical);
+  for (const carta of cartas) {
+    // obtem os valor de coordenada da carta
+    const cardX = margemHorizontal + carta.col * (LarguraCarta + margemHorizontal);
+    const cardY = margemVertical + carta.row * (alturaCarta + margemVertical);
 
+    // se o clique do jogador for dentro das coordenadas da carta, ele retorna a carta
     if (x >= cardX && x <= cardX + LarguraCarta && y >= cardY && y <= cardY + alturaCarta) {
-      return card;
+      return carta;
     }
   }
   return null;
 }
 
-// Função para desenhar o jogo
+// iniciar jogo
 function iniciarJogo() {
+
+//limpa o conteudo do canvas
   contexto.clearRect(0, 0, canvas.width, canvas.height);
 
-  for (const card of cartas) {
-    const cardX = margemHorizontal + card.col * (LarguraCarta + margemHorizontal);
-    const cardY = margemVertical + card.row * (alturaCarta + margemVertical);
+  for (const carta of cartas) {
+    // atribui a posição das cartas dentro do canvas
+    const cardX = margemHorizontal + carta.col * (LarguraCarta + margemHorizontal);
+    const cardY = margemVertical + carta.row * (alturaCarta + margemVertical);
 
-    if (card.virado) {
+    
+    if (carta.virado) {
       const img = new Image();
-      img.src = card.value;
+      img.src = carta.value;
       img.onload = function () {
         contexto.drawImage(img, cardX, cardY, LarguraCarta, alturaCarta);
       };
     } else {
-      // Desenhe a imagem da parte de trás das cartas
       contexto.drawImage(imagemFundo, cardX, cardY, LarguraCarta, alturaCarta);
     }
   }
