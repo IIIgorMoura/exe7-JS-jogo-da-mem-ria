@@ -4,16 +4,21 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
+
+    background-image: url(fundoJogo.jpg);
+    background-size: cover;
 }
 
 canvas {
-    border: 2px solid #000;
+    border-radius: 15px;
+
+    background-color: #fff;
 }
 
 .card {
-    width: 100px; /* Largura da carta */
-    height: 150px; /* Altura da carta */
-    margin: 10px; /* Espaçamento entre as cartas */
-    background-image: url("fundoCarta.jpg"); /* URL da imagem de fundo (verso da carta) */
-    background-size: cover; /* Ajusta o tamanho da imagem para cobrir toda a carta */
+    width: 100px; 
+    height: 150px; 
+    margin: 10px;
+    background-image: url("fundoCarta.jpg"); 
+    background-size: cover; 
 }

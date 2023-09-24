@@ -127,9 +127,6 @@ function iniciarJogo() {
     const cardX = margemHorizontal + card.col * (LarguraCarta + margemHorizontal);
     const cardY = margemVertical + card.row * (alturaCarta + margemVertical);
 
-    contexto.fillStyle = card.virado ? "#fff" : "#fff";
-    contexto.fillRect(cardX, cardY, LarguraCarta, alturaCarta);
-
     if (card.virado) {
       const img = new Image();
       img.src = card.value;
