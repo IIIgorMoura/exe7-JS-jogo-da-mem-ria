@@ -2,7 +2,7 @@ const canvas = document.getElementById("canvas");
 const contexto = canvas.getContext("2d");
 
 const LarguraCarta = 150;
-const cardHeight = 150;
+const alturaCarta = 150;
 const numLinhas = 4;
 const numColunas = 4;
 const cartas = [];
@@ -14,11 +14,11 @@ let flippedCards = [];
 let isFlipping = false;
 
 // Carregue a imagem da parte de trás das cartas
-const backImage = new Image();
-backImage.src = "fundoCarta.jpg"; // Nome da sua imagem
+const imagemFundo = new Image();
+imagemFundo.src = "fundoCarta.jpg"; // Nome da sua imagem
 
 // Pré-carregue a imagem da parte de trás das cartas
-backImage.onload = function() {
+imagemFundo.onload = function() {
     // Quando a imagem estiver carregada, chame a função drawGame para iniciar o jogo
     drawGame();
 };
@@ -102,9 +102,9 @@ function checkForMatch() {
 function getClickedCard(x, y) {
     for (const card of cartas) {
         const cardX = margemHorizontal + card.col * (LarguraCarta + margemHorizontal);
-        const cardY = margemVertical + card.row * (cardHeight + margemVertical);
+        const cardY = margemVertical + card.row * (alturaCarta + margemVertical);
 
-        if (x >= cardX && x <= cardX + LarguraCarta && y >= cardY && y <= cardY + cardHeight) {
+        if (x >= cardX && x <= cardX + LarguraCarta && y >= cardY && y <= cardY + alturaCarta) {
             return card;
         }
     }
@@ -117,20 +117,20 @@ function drawGame() {
 
     for (const card of cartas) {
         const cardX = margemHorizontal + card.col * (LarguraCarta + margemHorizontal);
-        const cardY = margemVertical + card.row * (cardHeight + margemVertical);
+        const cardY = margemVertical + card.row * (alturaCarta + margemVertical);
 
-        contexto.fillStyle = card.isFlipped ? "#fff" : "#53ee34";
-        contexto.fillRect(cardX, cardY, LarguraCarta, cardHeight);
+        contexto.fillStyle = card.isFlipped ? "#fff" : "#fff";
+        contexto.fillRect(cardX, cardY, LarguraCarta, alturaCarta);
 
         if (card.isFlipped) {
             const img = new Image();
             img.src = card.value;
             img.onload = function() {
-                contexto.drawImage(img, cardX, cardY, LarguraCarta, cardHeight);
+                contexto.drawImage(img, cardX, cardY, LarguraCarta, alturaCarta);
             };
         } else {
             // Desenhe a imagem da parte de trás das cartas
-            contexto.drawImage(backImage, cardX, cardY, LarguraCarta, cardHeight);
+            contexto.drawImage(imagemFundo, cardX, cardY, LarguraCarta, alturaCarta);
         }
     }
 }
