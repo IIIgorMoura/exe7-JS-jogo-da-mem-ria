@@ -14,11 +14,3 @@ canvas {
 
     background-color: #fff;
 }
-
-.card {
-    width: 100px; 
-    height: 150px; 
-    margin: 10px;
-    background-image: url("fundoCarta.jpg"); 
-    background-size: cover; 
-}
