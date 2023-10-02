@@ -47,10 +47,10 @@ const deckCartas = paresCarta.concat(paresCarta);
 misturar(deckCartas);
 
 // Cria cartas e atribui ao array cartas
-for (let row = 0; row < numLinhas; row++) {
+for (let linha = 0; linha < numLinhas; linha++) {
   for (let col = 0; col < numColunas; col++) {
     const carta = {
-      row,
+      linha,
       col,
       value: deckCartas.pop(),
       virado: false, 
@@ -61,7 +61,7 @@ for (let row = 0; row < numLinhas; row++) {
 
 canvas.addEventListener("click", virarCarta);
 
-function virarCarta(event) {
+function virarCarta(pos) {
     
 // se o limite de 2 cartas for alcançado, encerra a função
   if (limiteCartasViradas || cartasViradas.length >= 2) {
@@ -69,8 +69,8 @@ function virarCarta(event) {
   }
 
   // le as coordenadas da carta escolhida pelo jogador
-  const x = event.offsetX;
-  const y = event.offsetY;
+  const x = pos.offsetX;
+  const y = pos.offsetY;
 
   const cartaEscolhida = pegarCartaEscolhida(x, y);
 
@@ -117,7 +117,7 @@ function pegarCartaEscolhida(x, y) {
   for (const carta of cartas) {
     // obtem os valor de coordenada da carta
     const cardX = margemHorizontal + carta.col * (LarguraCarta + margemHorizontal);
-    const cardY = margemVertical + carta.row * (alturaCarta + margemVertical);
+    const cardY = margemVertical + carta.linha * (alturaCarta + margemVertical);
 
     // se o clique do jogador for dentro das coordenadas da carta, ele retorna a carta
     if (x >= cardX && x <= cardX + LarguraCarta && y >= cardY && y <= cardY + alturaCarta) {
@@ -136,7 +136,7 @@ function iniciarJogo() {
   for (const carta of cartas) {
     // atribui a posição das cartas dentro do canvas
     const cardX = margemHorizontal + carta.col * (LarguraCarta + margemHorizontal);
-    const cardY = margemVertical + carta.row * (alturaCarta + margemVertical);
+    const cardY = margemVertical + carta.linha * (alturaCarta + margemVertical);
 
     
     if (carta.virado) {
